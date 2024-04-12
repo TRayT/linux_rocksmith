@@ -53,18 +53,14 @@ Installing `base-devel` is very useful for using the AUR and compiling in genera
 > cd into the unpacked directory, then run this.
 >
 > ```
-> rm -rf build32
-> rm -rf build64
-> make 32
-> make 64
-> sudo cp build32/wineasio32.dll /usr/lib32/wine/i386-windows/wineasio32.dll
-> sudo cp build32/wineasio32.dll.so /usr/lib32/wine/i386-unix/wineasio32.dll.so
-> sudo cp build64/wineasio64.dll /usr/lib/wine/x86_64-windows/wineasio64.dll
-> sudo cp build64/wineasio64.dll.so /usr/lib/wine/x86_64-unix/wineasio64.dll.so
-> cp build32/wineasio32.dll "$PROTON/lib/wine/i386-windows/wineasio.dll"
-> cp build32/wineasio32.dll.so "$PROTON/lib/wine/i386-unix/wineasio.dll.so"
-> cp build64/wineasio64.dll "$PROTON/lib/wine/x86_64-windows/wineasio.dll"
-> cp build64/wineasio64.dll.so "$PROTON/lib/wine/x86_64-unix/wineasio.dll.so"
+> wget https://aur.archlinux.org/cgit/aur.git/snapshot/wineasio.tar.gz
+> tar -xvf wineasio.tar.gz
+> cd wineasio
+> makepkg -is
+> ln -s /usr/lib32/wine/i386-unix/wineasio32.dll.so "$PROTON/lib/wine/i386-unix/wineasio.dll.so"
+> ln -s /usr/lib/wine/x86_64-unix/wineasio64.dll.so "$PROTON/lib64/wine/x86_64-unix/wineasio.dll.so"
+> ln -s /usr/lib32/wine/i386-windows/wineasio32.dll "$PROTON/lib/wine/i386-windows/wineasio.dll"
+> ln -s /usr/lib/wine/x86_64-windows/wineasio64.dll "$PROTON/lib64/wine/x86_64-windows/wineasio.dll"
 > env WINEPREFIX=$STEAMLIBRARY/steamapps/compatdata/221680/pfx ./wineasio-register
 > ```
 >
@@ -74,38 +70,7 @@ Installing `base-devel` is very useful for using the AUR and compiling in genera
 
 
 
-[Download](https://github.com/wineasio/wineasio/releases) the newest zip and unpack it. Open a terminal inside the newly created folder and run the following commands:
-
-<details><summary>[How to] Clone instead of downloading:</summary>
-
-> (No support for this way, as release package is easier to replicate.)
->
-> ```
-> git clone --recursive https://github.com/wineasio/wineasio.git
-> cd wineasio
-> ```
->
-
-</details>
-
-
-
-```
-# build
-rm -rf build32
-rm -rf build64
-make 32
-make 64
-
-# Install on normal wine
-sudo cp build32/wineasio32.dll /usr/lib32/wine/i386-windows/wineasio32.dll
-sudo cp build32/wineasio32.dll.so /usr/lib32/wine/i386-unix/wineasio32.dll.so
-sudo cp build64/wineasio64.dll /usr/lib/wine/x86_64-windows/wineasio64.dll
-sudo cp build64/wineasio64.dll.so /usr/lib/wine/x86_64-unix/wineasio64.dll.so
-```
-
-
-
+[Install](https://aur.archlinux.org/packages/wineasio) or [the Git version](https://aur.archlinux.org/packages/wineasio-git)(No support for this way, as release package is easier to replicate.)
 `wineasio` is now installed on your system.
 
 <details><summary>How to check if it's installed correctly</summary>
@@ -121,10 +86,10 @@ To make Proton use wineasio, we need to copy these files into the appropriate lo
 
 ```
 # !!! WATCH OUT FOR VARIABLES !!!
-cp /usr/lib32/wine/i386-unix/wineasio32.dll.so "$PROTON/lib/wine/i386-unix/wineasio.dll.so"
-cp /usr/lib/wine/x86_64-unix/wineasio64.dll.so "$PROTON/lib64/wine/x86_64-unix/wineasio.dll.so"
-cp /usr/lib32/wine/i386-windows/wineasio32.dll "$PROTON/lib/wine/i386-windows/wineasio.dll"
-cp /usr/lib/wine/x86_64-windows/wineasio64.dll "$PROTON/lib64/wine/x86_64-windows/wineasio.dll"
+ln -s /usr/lib32/wine/i386-unix/wineasio32.dll.so "$PROTON/lib/wine/i386-unix/wineasio.dll.so"
+ln -s /usr/lib/wine/x86_64-unix/wineasio64.dll.so "$PROTON/lib64/wine/x86_64-unix/wineasio.dll.so"
+ln -s /usr/lib32/wine/i386-windows/wineasio32.dll "$PROTON/lib/wine/i386-windows/wineasio.dll"
+ln -s /usr/lib/wine/x86_64-windows/wineasio64.dll "$PROTON/lib64/wine/x86_64-windows/wineasio.dll"
 ```
 
 In theory, this should also work with Lutris runners (located in `$HOME/.local/share/lutris/runners/wine/`)
